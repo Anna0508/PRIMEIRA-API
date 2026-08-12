@@ -30,6 +30,24 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     logger.info(f"Usuario logado com sucesso:{form_data.username}")
     return{"access_token":token_real,"token_type":"bearer"}
 
+
+@app.get("/ users/{user_id}")
+async def acessar_painel_admin(usuario_atual: dict = Depends(obter_usuario_atual)):
+
+    if usuario_atual.get("role") != "admin":
+        logger.error(f"Acesso negado para {usuario_atual.get('username')}no painel admin.")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Você não possui acesso."
+        )
+
+    logger.info(f"Administardor {usuario_atual.get('username')} acessou o painel")
+    return{"status": "Bem-vindo ao painel adm",
+        
+    }
+                     
+
+
    
               
 
