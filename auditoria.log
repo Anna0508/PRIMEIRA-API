@@ -17,3 +17,8 @@ pip install python-multipart
 2026-08-12 17:33:58,229 - auditoria - WARNING - Falha no login:string
 2026-08-12 17:34:37,229 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
 2026-08-12 17:38:27,333 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-13 16:09:25,784 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-13 16:09:27,150 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-13 16:09:28,224 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-13 16:09:29,066 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-13 16:09:49,884 - auditoria - INFO - Usuario logado com sucesso:admin@email.com

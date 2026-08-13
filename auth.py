@@ -11,7 +11,11 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTE = 30
 
 pwd_context = PasswordHash.recommended()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+from fastapi.security import OAuth2PasswordBearer
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 
 def verificar_senha(plain_password, hashed_password ):

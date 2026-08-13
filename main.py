@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status 
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer
 
 
 from config import logger
@@ -42,9 +43,9 @@ async def acessar_painel_admin(usuario_atual: dict = Depends(obter_usuario_atual
         )
 
     logger.info(f"Administardor {usuario_atual.get('username')} acessou o painel")
-    return{"status": "Bem-vindo ao painel adm",
+    return{"status": "Bem-vindo ao painel adm", }
         
-    }
+  
                      
 
 
