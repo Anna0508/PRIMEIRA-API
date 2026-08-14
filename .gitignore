@@ -1,9 +1,8 @@
-# Esconde o arquivo de senhas e configurações
+
 .env
 
-# Esconde as pastas automáticas do Python (como a __pycache__ que aparece na sua imagem)
+
 __pycache__/
 *.pyc
 
-# Esconde arquivos de logs (como o auditoria.log que está no seu projeto)
 *.log

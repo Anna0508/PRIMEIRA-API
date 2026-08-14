@@ -1,6 +1,6 @@
 import logging 
 def configurar_auditoria():
-    logging.getLogger("ouvicorn").handlers.clear()
+    logging.getLogger("uvicorn").handlers.clear()
 
     logging.basicConfig(
         filename="auditoria.log",

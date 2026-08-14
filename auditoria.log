@@ -27,3 +27,7 @@ pip install python-multipart
 2026-08-13 16:15:10,588 - auditoria - WARNING - Falha de login:admin@email.com
 2026-08-13 16:15:21,724 - auditoria - WARNING - Falha no login:admin7890
 2026-08-13 16:16:08,478 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-14 15:41:09,303 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-14 15:41:37,842 - auditoria - INFO - Administardor None acessou o painel
+2026-08-14 15:43:11,579 - auditoria - INFO - Usuario logado com sucesso:user@email.com
+2026-08-14 15:43:22,989 - auditoria - ERROR - Acesso negado para Noneno painel admin.

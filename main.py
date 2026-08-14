@@ -18,7 +18,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Usuario ou senha incorreto",
-            headers={"WWWA-Authenticate": "Bearer"},
+            headers={"WWW-Authenticate": "Bearer"},
         )
     if not verificar_senha(form_data.password, usuario["password"]):
         logger.warning(f"Falha de login:{form_data.username}")
