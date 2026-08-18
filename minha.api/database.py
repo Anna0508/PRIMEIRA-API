@@ -9,11 +9,13 @@ USUARIOS_DB = {
      "admin@email.com": {
          "password": hasher.hash("admin7890"),
          "role": "admin",
+         "active": True
+         
 
      },
      "user@email.com": {
          "password": hasher.hash("user1234"),
          "role": "user",
-        
+         "active": True
      }
 }

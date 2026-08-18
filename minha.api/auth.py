@@ -49,6 +49,12 @@ def obter_usuario_atual(token:str = Depends(oauth2_scheme)):
                                 status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="token invalido"
                         )
+                if not usuario.get("active", True):
+                        logger.warning(f"Tentativa de acesso com conta desativada:{email}")
+                        raise HTTPException(
+                                status_code=status.HTTP_403_FORBIDDEN,
+                                detail="Esta conta foi desativada pelo administrador"
+                        )
                 
                 return usuario 
         
