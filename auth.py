@@ -3,8 +3,10 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer 
 from pwdlib import PasswordHash
+
+from config import logger 
 from database import USUARIOS_DB
-from config import logger
+
 import os
 from dotenv import load_dotenv
 
@@ -41,7 +43,7 @@ def obter_usuario_atual(token:str = Depends(oauth2_scheme)):
                 if email is None:
                         raise HTTPException(
                                 status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="token invalido",
+                                detail="token invalido"
                         )
                 usuario = USUARIOS_DB.get(email)
                 if not usuario:
@@ -55,7 +57,7 @@ def obter_usuario_atual(token:str = Depends(oauth2_scheme)):
         except jwt.PyJWTError:
                 raise HTTPException(
                         status_code=status.HTTP_401_UNAUTHORIZED,
-                        detail="token invalido",
+                        detail="token invalido"
                 )
         
 

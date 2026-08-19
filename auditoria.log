@@ -30,4 +30,24 @@ pip install python-multipart
 2026-08-14 15:41:09,303 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
 2026-08-14 15:41:37,842 - auditoria - INFO - Administardor None acessou o painel
 2026-08-14 15:43:11,579 - auditoria - INFO - Usuario logado com sucesso:user@email.com
-2026-08-14 15:43:22,989 - auditoria - ERROR - Acesso negado para Noneno painel admin.
+2026-08-14 15:43:22,989 - auditoria - ERROR - Acesso negado para Noneno painel admin.2026-08-19 14:59:59,756 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:00:18,123 - auditoria - ERROR - QUEM: Admin, AÇÃO: CRIAR_USUARIO, EM QUEM:user@example.com, STATUS: FALHA(Papel inválido)
+2026-08-19 15:00:19,921 - auditoria - ERROR - QUEM: Admin, AÇÃO: CRIAR_USUARIO, EM QUEM:user@example.com, STATUS: FALHA(Papel inválido)
+2026-08-19 15:00:29,886 - auditoria - INFO - Administardor None acessou o painel
+2026-08-19 15:03:13,000 - auditoria - INFO - Administardor None acessou o painel
+2026-08-19 15:04:14,046 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:15:10,881 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:15:40,385 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:15:47,156 - auditoria - INFO - Administardor None acessou o painel
+2026-08-19 15:16:21,032 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:17:07,679 - auditoria - INFO - QUEM:Admin, AÇÃO: CRIAR_USUARIO, EM QUEM:carlos@email.com, STATUS: SUCESSO
+2026-08-19 15:21:43,893 - auditoria - WARNING - Falha no login:admin@email.com 
+2026-08-19 15:22:11,050 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:23:29,967 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-19 15:23:39,973 - auditoria - WARNING - Falha de login:admin@email.com
+2026-08-19 15:27:16,555 - auditoria - INFO - Usuario logado com sucesso:admin@email.com
+2026-08-19 15:27:36,238 - auditoria - INFO - QUEM:Admin, AÇÃO: CRIAR_USUARIO, EM QUEM:carlos@email.com, STATUS: SUCESSO
+2026-08-19 16:35:25,244 - auditoria - INFO - Usuário logado com sucesso: admin@email.com
+2026-08-19 16:35:57,002 - auditoria - WARNING - Falha de login: admin@email.com
+2026-08-19 16:36:04,498 - auditoria - INFO - Usuário logado com sucesso: admin@email.com
+2026-08-19 16:37:15,466 - auditoria - INFO - QUEM: Admin, AÇÃO: CRIAR_USUARIO, EM QUEM: julia@gmail.com, STATUS: SUCESSO
