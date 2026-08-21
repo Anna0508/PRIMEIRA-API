@@ -56,8 +56,12 @@ class UsuarioCriar(BaseModel):
 
 
 class UsuarioEditar(BaseModel):
+    email_alvo:str
     nome: Optional[str] = None
     role: Optional[str] = None
+
+class UsuarioDesativar(BaseModel):
+    email_alvo:str    
 
 
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
@@ -93,6 +97,79 @@ async def criar_usuario(dados: UsuarioCriar, usuario_atual: dict = Depends(obter
     
     logger.info(f"QUEM: {quem}, AÇÃO: CRIAR_USUARIO, EM QUEM: {dados.email}, STATUS: SUCESSO")
     return {"mensagem": f"Usuário {dados.email} criado com sucesso."}
+
+@app.get("/usuarios")
+async def listar_usuarios(usuario_atual: dict = Depends(obter_usuario_atual)):
+    quem_pediu = usuario_atual.get("nome", "Desconhecido")
+
+    if usuario_atual.get("role") != "admin":
+        logger.error(f"FALHA AÇÃO: LISTAR_USUARIOS QUEM:{quem_pediu} STATUS:Bloqueado (não é admin)")
+
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Acesso negado. Apenas administradores podem listar usuarioa"
+        )  
+    return USUARIOS_DB
+  
+@app.put("/usuarios/editar")
+async def editar_usuario(dados: UsuarioEditar, usuario_atual: dict = Depends(obter_usuario_atual)):
+    if usuario_atual.get('role') != "admin":
+        logger.warning(f"ACESSO NEGADO: uuario comum tentou acessar a rota")
+        raise HTTPException(status_code=403, detail= "Acesso negado. Apena administradores podem desativar") 
+
+    email_alvo = dados.email_alvo
+
+    if email_alvo not in USUARIOS_DB:
+        logger.warning(f"Tetantiva de edição falhou: o usuario{email_alvo}, não existe no banco")
+        raise HTTPException(status_code=404, detail="usuario não encontrado")
+ 
+
+    dados_antigos = USUARIOS_DB[email_alvo].copy()
+
+    if dados.nome is not None:
+        USUARIOS_DB[email_alvo]["nome"] = dados.nome
+    if dados.role in ["admin", "user"] :
+        USUARIOS_DB[email_alvo]["role"] = dados.role
+
+    logger.info(
+        f"QUEM:({email_alvo}), AÇÃO: EDITAR_USUARIO,"
+        f"DADOS_ANTIGOS: (nome={dados_antigos.get('nome')}, role={dados_antigos.get('role')}),"
+        f"NOVOS_DADOS: (nome-{USUARIOS_DB[email_alvo]['nome']}, role ={USUARIOS_DB[email_alvo]['role']})"
+
+    )    
+
+    return{"mensagem": "Dados atualizados"}
+
+@app.patch("/usuarios/desativar")
+async def desativar_usuario(dados: UsuarioDesativar,usuario_atual: dict = Depends(obter_usuario_atual)):
+
+    if usuario_atual.get("role") != "admin":
+        logger.warning(f"ACESSO NEGADO: usuario comum tentou acessar")
+        raise HTTPException(status_code=403, detail="Acesso negado. Apenas administradores podem desativar usuarios")
+    
+    email_alvo = dados.email_alvo
+
+    if email_alvo not in USUARIOS_DB:
+        logger.warning(f"Tentativa de desativação falhou: O usuário {email_alvo} não existe.")
+        raise HTTPException(status_code=404, detail="Usuário não encontrado no banco de dados.")
+
+
+    USUARIOS_DB[email_alvo]["active"] = False
+
+    logger.info(f"QUEM: ({email_alvo}), AÇÃO DESATIVAR_CONTA, STATUS: SUCESSO" )
+
+    return{"mensagem": "Usuario desativado com sucesso!"}
+
+
+
+
+
+
+        
+                     
+                     
+
+
 
                      
                      
