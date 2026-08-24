@@ -2,11 +2,18 @@ from datetime import datetime, timedelta, timezone
 import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from pwdlib import PasswordHash
 
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from database import obter_usuarios
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+hasher = PasswordHash.recommended()
+
+def verificar_senha(senha_digitada, senha_do_banco):
+    return hasher.verify(senha_digitada, senha_do_banco)
 
 def criar_token(dados: dict):
     dados_copia = dados.copy()
