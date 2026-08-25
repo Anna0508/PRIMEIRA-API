@@ -4,17 +4,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def carregar_secret_key():
     chave = os.getenv("SECRET_KEY")
     if not chave:
-        raise ValueError("SECRET_KEY NÃO DEFINIDA, " \
-        "configure a varial antes de inicar o servidor")
+        raise ValueError(
+            "SECRET_KEY NÃO DEFINIDA!"
+            "configure a varial antes de inicar o servidor"
+            )
     return chave
+
 
 SECRET_KEY = carregar_secret_key()
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
     os.getenv("ACESS_TOKEN_EXPIRE_MINUTES", "30"))
+
 
 def configurar_auditoria():
     logging.getLogger("ouvicorn").handlers.clear()
@@ -27,6 +32,5 @@ def configurar_auditoria():
     )
     return logging.getLogger("auditoria")
 
+
 logger = configurar_auditoria()
-
-

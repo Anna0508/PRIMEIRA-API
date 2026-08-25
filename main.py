@@ -13,6 +13,7 @@ hasher = PasswordHash.recommended()
 
 app = FastAPI()
 
+
 class UsuarioCriar(BaseModel):
     name: str
     email: str
