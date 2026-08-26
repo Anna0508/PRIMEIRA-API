@@ -63,7 +63,8 @@ def listar_usuarios(usuario_atual: dict = Depends(obter_usuario_atual)):
 
     usuarios_seguros = {
         email: {
-            chave: valor for chave, valor in dados_user.items()
+            chave: valor
+            for chave, valor in dados_user.items()
             if chave != "password"
         }
         for email, dados_user in USUARIOS_DB.items()

@@ -11,14 +11,14 @@ def carregar_secret_key():
         raise ValueError(
             "SECRET_KEY NÃO DEFINIDA!"
             "configure a varial antes de inicar o servidor"
-            )
+        )
     return chave
 
 
 SECRET_KEY = carregar_secret_key()
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
-    os.getenv("ACESS_TOKEN_EXPIRE_MINUTES", "30"))
+    os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 
 def configurar_auditoria():

@@ -43,6 +43,9 @@ def obter_usuario_atual(token: str = Depends(oauth2_scheme)):
         if usuario is None:
             raise HTTPException(status_code=401, detail="Token invalido")
 
+        if not usuario.get("active", True):
+            raise HTTPException(status_code=401, detail="usuario inativo")
+
         return usuario
 
     except jwt.PyJWTError:
