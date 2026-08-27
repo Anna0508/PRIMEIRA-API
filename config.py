@@ -21,8 +21,16 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(
     os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
 
+class DefaultUserFilter(logging.Filter):
+    def filter(self, record):
+        if not hasattr(record, "user"):
+            record.user = "sistema"
+        return True
+       
+
 def configurar_auditoria():
-    logging.getLogger("ouvicorn").handlers.clear()
+    logging.getLogger("uvicorn.error").propagate = False
+    logging.getLogger("uvicorn.access").propagate = False
 
     logging.basicConfig(
         filename="auditoria.log",
@@ -30,6 +38,9 @@ def configurar_auditoria():
         format="%(asctime)s - %(user)s - %(levelname)s - %(message)s",
         encoding="utf-8",
     )
+
+    logging.getLogger().addFilter(DefaultUserFilter())
+
     return logging.getLogger("auditoria")
 
 
