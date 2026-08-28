@@ -1,6 +1,14 @@
 from fastapi.testclient import TestClient
 from main import app
 
+import main 
+import pytest
+
+@pytest.fixture(autouse=True)
+def limpar_tentativas_login():
+    main.TENTATIVAS_LOGIN.clear()
+    yield
+
 client = TestClient(app)
 
 ADMIN_EMAIL = "admin@email.com"
@@ -25,7 +33,7 @@ def test_senha_errada_e_rejeitada():
         data={"username": ADMIN_EMAIL, "password": "senha_errada_qualquer"},
     )
 
-    assert response.status_code == 400
+    assert response.status_code == 401
     assert "access_token" not in response.json()
 
 
@@ -64,3 +72,52 @@ def test_admin_cria_usuario_que_faz_login_e_usa_o_token():
         headers={"Authorization": f"Bearer {token_novo_usuario}"},
     )
     assert resposta_protegida.status_code == 403
+
+def test_filtro_por_perfil():
+    token_admin = client.post(
+
+         "/token", data={"username": ADMIN_EMAIL, "password": ADMIN_SENHA}
+    ).json()["access_token"]
+
+    resposta = client.get(
+        "/usuarios",
+        params={"perfil": "admin"},
+        headers={"Authorization": f"Bearer {token_admin}"},
+    )
+
+    assert resposta.status_code == 200
+    usuarios = resposta.json()
+    assert all(u["role"] == "admin" for u in usuarios.values())
+
+
+def test_filtro_por_status_ativo():
+    token_admin = client.post(
+        "/token", data={"username": ADMIN_EMAIL, "password": ADMIN_SENHA}
+    ).json()["access_token"]
+
+    resposta = client.get(
+        "/usuarios",
+        params={"status": "ativo"},
+        headers={"Authorization": f"Bearer {token_admin}"},
+    )
+
+    assert resposta.status_code == 200
+    usuarios = resposta.json()
+    assert all(u["active"] is True for u in usuarios.values())
+
+
+def test_filtro_status_invalido_retorna_422():
+    token_admin = client.post(
+        "/token", data={"username": ADMIN_EMAIL, "password": ADMIN_SENHA}
+    ).json()["access_token"]
+
+    resposta = client.get(
+        "/usuarios",
+        params={"status": "banana"},
+        headers={"Authorization": f"Bearer {token_admin}"},
+    )
+
+    assert resposta.status_code == 422
+
+    
+

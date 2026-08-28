@@ -1,13 +1,37 @@
-from config import logger
+from config import logger, MAX_TENTATIVAS_LOGIN
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Query
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Optional
 from pwdlib import PasswordHash
+from datetime import datetime, timezone, timedelta
+import time
+
 
 from database import USUARIOS_DB
 from auth import verificar_senha, criar_token, obter_usuario_atual
+
+DELAYS_SEGUNDOS = [2, 10, 60, 300]
+
+TENTATIVAS_LOGIN: dict[str, dict] = {}
+
+def calcular_delay(tentativas):
+    indice = min(tentativas, MAX_TENTATIVAS_LOGIN) - 1
+    indice = min(indice, len(DELAYS_SEGUNDOS)) - 1
+    return DELAYS_SEGUNDOS[indice]
+
+
+def registrar_tentativa_falha(username, info_anterior):
+    if info_anterior:
+        tentativas_atual = info_anterior["tentativas"] + 1
+    else:
+        tentativas_atual = 1
+    TENTATIVAS_LOGIN[username] = {
+        "tentativas": tentativas_atual,
+        "proxima_tentativa_permitida": datetime.now(timezone.utc)
+        +timedelta(seconds=calcular_delay(tentativas_atual)),
+   }
 
 hasher = PasswordHash.recommended()
 
@@ -29,12 +53,22 @@ class UsuarioEditar(BaseModel):
 
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    info_tentativas = TENTATIVAS_LOGIN.get(form_data.username)
+    if info_tentativas:
+        espera = (
+            info_tentativas["proxima_tentativa_permitida"] - datetime.now(timezone.utc)
+        ).total_seconds()
+        if espera > 0:
+            time.sleep(espera)
+
+
     usuario = USUARIOS_DB.get(form_data.username)
     headers = {"WWW-Authenticate": "Bearer"}
 
     if not usuario or not usuario.get("active"):
+        registrar_tentativa_falha(form_data.username, info_tentativas)
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail="E-mail ou senha incorretos.",
         )
 
@@ -42,12 +76,14 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         logger.warning(
             f"Falha de login: {form_data.username}", extra={"user": "Sistema"}
         )
+        registrar_tentativa_falha(form_data.username, info_tentativas)
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail="E-mail ou senha incorretos.",
             headers=headers,
         )
 
+    TENTATIVAS_LOGIN.pop(form_data.username, None)
     token_real = criar_token(dados={"sub": form_data.username})
     logger.info(
         f"Usuário logado com sucesso: {form_data.username}",
@@ -57,27 +93,44 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
 
 @app.get("/usuarios")
-def listar_usuarios(usuario_atual: dict = Depends(obter_usuario_atual)):
+def listar_usuarios(
+    usuario_atual: dict = Depends(obter_usuario_atual),
+    perfil: Optional[str] = None,
+    status_usuario: Optional[str] = Query(None, alias="status"),
+):
     if usuario_atual.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="Acesso negado.")
+        raise HTTPException(status_code=403, detail="acesso negado")
+    if status_usuario is not None  and status_usuario not in ("ativo", "inativo"):
+        raise HTTPException(
+            status_code=422, detail="status deve ser 'ativo' ou 'inativo'."
+        )
+    ativo_filtro = None
+    if status_usuario == 'ativo':
+        ativo_filtro = True
+    elif status_usuario ==  'inativo':
+        ativo_filtro = False
 
-    usuarios_seguros = {
-        email: {
-            chave: valor
-            for chave, valor in dados_user.items()
-            if chave != "password"
+    usuarios_seguro = {}
+    for email, dados_user in USUARIOS_DB.items():
+        if perfil is not None and dados_user.get("role") != perfil:
+            continue
+        if ativo_filtro is not None and dados_user.get("active") != ativo_filtro:
+            continue
+
+        usuarios_seguro[email] = {
+            chave: valor for chave, valor in dados_user.items()
+            if chave !=" password"
         }
-        for email, dados_user in USUARIOS_DB.items()
-    }
-    return usuarios_seguros
+
+        return usuarios_seguro
 
 
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
 async def criar_usuario(
     dados: UsuarioCriar, usuario_atual: dict = Depends(obter_usuario_atual)
 ):
+    
     quem = usuario_atual.get("name", "Admin")
-
     if usuario_atual.get("role") != "admin":
         logger.error("FALHA: Sem permissão", extra={"user": quem})
         raise HTTPException(status_code=403, detail="Você não possui acesso.")

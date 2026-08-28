@@ -14,7 +14,7 @@ def carregar_secret_key():
         )
     return chave
 
-
+MAX_TENTATIVAS_LOGIN = int(os.getenv("MAX_TENTATIVAS_LOGIN", 4))
 SECRET_KEY = carregar_secret_key()
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(
