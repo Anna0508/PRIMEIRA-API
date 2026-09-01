@@ -93,37 +93,24 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
 
 @app.get("/usuarios")
-def listar_usuarios(
-    usuario_atual: dict = Depends(obter_usuario_atual),
-    perfil: Optional[str] = None,
-    status_usuario: Optional[str] = Query(None, alias="status"),
-):
-    if usuario_atual.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="acesso negado")
-    if status_usuario is not None  and status_usuario not in ("ativo", "inativo"):
-        raise HTTPException(
-            status_code=422, detail="status deve ser 'ativo' ou 'inativo'."
-        )
-    ativo_filtro = None
-    if status_usuario == 'ativo':
-        ativo_filtro = True
-    elif status_usuario ==  'inativo':
-        ativo_filtro = False
+def listar_usuarios(role: str = None, active : bool = None):
+    resultado = {}
 
-    usuarios_seguro = {}
-    for email, dados_user in USUARIOS_DB.items():
-        if perfil is not None and dados_user.get("role") != perfil:
-            continue
-        if ativo_filtro is not None and dados_user.get("active") != ativo_filtro:
-            continue
+    for email, dados in USUARIOS_DB.items():
 
-        usuarios_seguro[email] = {
-            chave: valor for chave, valor in dados_user.items()
-            if chave !=" password"
+        if role is not None and dados["role"] != role:
+            continue
+        
+        if active is not None and dados["active"] != active:
+            continue 
+
+        resultado[email] = {
+            "name": dados.get("name"),
+            "role": dados["role"],
+            "active": dados["active"]
         }
-
-        return usuarios_seguro
-
+    
+    return resultado
 
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
 async def criar_usuario(

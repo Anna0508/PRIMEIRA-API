@@ -22,9 +22,9 @@ def test_login_admin_retorna_name_correto_no_get_usuarios():
 
     resposta = client.get(
         "/usuarios",
-        headers={"Authhorization": f"Bearer {token_admin}"},
+        headers={"Authorization": f"Bearer {token_admin}"},
     )
-    assert resposta.status_code == 20
+    assert resposta.status_code == 200
 
     usuarios = resposta.json()
     email_admin = os.getenv("ADMIN_EMAIL")
