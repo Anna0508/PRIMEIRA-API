@@ -83,13 +83,13 @@ def test_filtro_por_perfil():
 
     resposta = client.get(
         "/usuarios",
-        params={"perfil": "admin"},
+        params={"role": "admin"},
         headers={"Authorization": f"Bearer {token_admin}"},
     )
 
     assert resposta.status_code == 200
     usuarios = resposta.json()
-    assert all(u["role"] == "admin" for u in usuarios.values())
+    assert all(u["role"] == "admin" for u in usuarios)
 
 
 def test_filtro_por_status_ativo():
@@ -99,13 +99,13 @@ def test_filtro_por_status_ativo():
 
     resposta = client.get(
         "/usuarios",
-        params={"status": "ativo"},
+        params={"active": True},
         headers={"Authorization": f"Bearer {token_admin}"},
     )
 
     assert resposta.status_code == 200
     usuarios = resposta.json()
-    assert all(u["active"] is True for u in usuarios.values())
+    assert all(u["active"] is True for u in usuarios)
 
 
 def test_filtro_status_invalido_retorna_422():
@@ -115,7 +115,7 @@ def test_filtro_status_invalido_retorna_422():
 
     resposta = client.get(
         "/usuarios",
-        params={"status": "banana"},
+        params={"active": "banana"},
         headers={"Authorization": f"Bearer {token_admin}"},
     )
 

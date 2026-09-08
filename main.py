@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from typing import Optional
 from pwdlib import PasswordHash
 from datetime import datetime, timezone, timedelta
-import time
+
 
 
 from database import SessionLocal, Usuario
@@ -18,9 +18,7 @@ TENTATIVAS_LOGIN: dict[str, dict] = {}
 
 
 def calcular_delay(tentativas):
-    indice = min(tentativas, MAX_TENTATIVAS_LOGIN)
-    indice = min(indice, len(DELAYS_SEGUNDOS)) - 1
-    indice = min(tentativas, len(DELAYS_SEGUNDOS)) - 1
+    indice = min(tentativas, MAX_TENTATIVAS_LOGIN, len(DELAYS_SEGUNDOS)) -1
     return DELAYS_SEGUNDOS[indice]
 
 
@@ -80,32 +78,41 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         session.close()
 
 @app.get("/usuarios")
-def listar_usuarios(role: str = None, active: bool = None):
+def listar_usuarios(
+    role: str = None, 
+    active: bool = None,
+    usuario_logado: Usuario = Depends(obter_usuario_atual),
+):
+    if usuario_logado.role != "admin":
+        raise HTTPException(status_code=403, detail="Acesso negado.")
+
     session = SessionLocal()
     try:
-        usuarios =  session.query(Usuario).all()
-        resultado = []
-        for usuario in usuarios:
-            if role is not None and usuario.role != role:
-                continue
-            if active is not None and usuario.active != active:
-                continue
-            resultado.append({
-                "id": usuario.id,
-                "email": usuario.email,
-                "name": usuario.name,
-                "role": usuario.role,
-                "active": usuario.active,
-                "create_at": usuario.create_at,
-                "update_at": usuario.update_at,
-    
-            })
+        query = session.query(Usuario)
+        if role is not None:
+            query = query.filter(Usuario.role == role)
+            if active is not None:
+                query = query.filter(Usuario.active == active)
+            usuarios = query.all()
 
-        return resultado
+            resultado = []
+            for usuario in usuarios:
+                resultado.append({
+                    "id": usuario.id,
+                    "email": usuario.email,
+                    "name": usuario.name,
+                    "role": usuario.role,
+                    "active": usuario.active,
+                    "create_at": usuario.create_at,
+                    "update_at": usuario.update_at,
+                })
+                return resultado
+    except Exception as e:
+        logger.error(f"Erro ao listar usuarios: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor")
     finally:
         session.close()
-
-
+    
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
 async def criar_usuario(
     dados: UsuarioCriar, usuario_atual: dict = Depends(obter_usuario_atual)
