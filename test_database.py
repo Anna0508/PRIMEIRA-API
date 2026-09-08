@@ -5,6 +5,7 @@ from database import USUARIOS_DB
 
 client = TestClient(app)
 
+
 def test_usuarios_seed_usam_chave_name():
     for email, dados in USUARIOS_DB.items():
         assert "name" in dados, f"Usuario {email} não tem a chave 'name'"
@@ -14,8 +15,10 @@ def test_usuarios_seed_usam_chave_name():
 def test_login_admin_retorna_name_correto_no_get_usuarios():
     login_admin = client.post(
         "/token",
-        data={"username": os.getenv("ADMIN_EMAIL"), "password": os.getenv("ADMIN_SENHA")},
-
+        data={
+            "username": os.getenv("ADMIN_EMAIL"),
+            "password": os.getenv("ADMIN_SENHA"),
+        },
     )
     assert login_admin.status_code == 200
     token_admin = login_admin.json()["access_token"]
@@ -30,4 +33,3 @@ def test_login_admin_retorna_name_correto_no_get_usuarios():
     email_admin = os.getenv("ADMIN_EMAIL")
 
     assert usuarios[email_admin]["name"] == "admin"
-        

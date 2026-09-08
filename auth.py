@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from pwdlib import PasswordHash
 
 from config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from database import obter_usuarios
+from database import obter_usuarios_por_email
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -37,14 +37,13 @@ def obter_usuario_atual(token: str = Depends(oauth2_scheme)):
         if email is None:
             raise HTTPException(status_code=401, detail="token invalido")
 
-        usuarios = obter_usuarios()
-        usuario = usuarios.get(email)
+        usuario = obter_usuarios_por_email(email)
 
         if usuario is None:
             raise HTTPException(status_code=401, detail="Token invalido")
 
-        if not usuario.get("active", True):
-            raise HTTPException(status_code=401, detail="usuario inativo")
+        if not usuario.active:
+            raise HTTPException(status_code=403, detail="Usuario inativo")
 
         return usuario
 

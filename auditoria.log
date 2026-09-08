@@ -1,0 +1,40 @@
+2026-09-08 14:10:52,629 - sistema - INFO - SELECT DATABASE()
+2026-09-08 14:10:52,629 - sistema - INFO - [raw sql] {}
+2026-09-08 14:10:52,658 - sistema - INFO - SELECT @@sql_mode
+2026-09-08 14:10:52,659 - sistema - INFO - [raw sql] {}
+2026-09-08 14:10:52,676 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-08 14:10:52,677 - sistema - INFO - [raw sql] {}
+2026-09-08 14:10:52,722 - sistema - INFO - BEGIN (implicit)
+2026-09-08 14:10:52,723 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-08 14:10:52,723 - sistema - INFO - [raw sql] {}
+2026-09-08 14:10:52,741 - sistema - INFO - COMMIT
+2026-09-08 14:11:00,197 - sistema - INFO - SELECT DATABASE()
+2026-09-08 14:11:00,198 - sistema - INFO - [raw sql] {}
+2026-09-08 14:11:00,234 - sistema - INFO - SELECT @@sql_mode
+2026-09-08 14:11:00,235 - sistema - INFO - [raw sql] {}
+2026-09-08 14:11:00,250 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-08 14:11:00,250 - sistema - INFO - [raw sql] {}
+2026-09-08 14:11:00,294 - sistema - INFO - BEGIN (implicit)
+2026-09-08 14:11:00,295 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-08 14:11:00,295 - sistema - INFO - [raw sql] {}
+2026-09-08 14:11:00,313 - sistema - INFO - COMMIT
+2026-09-08 14:15:10,255 - sistema - INFO - SELECT DATABASE()
+2026-09-08 14:15:10,256 - sistema - INFO - [raw sql] {}
+2026-09-08 14:15:10,282 - sistema - INFO - SELECT @@sql_mode
+2026-09-08 14:15:10,282 - sistema - INFO - [raw sql] {}
+2026-09-08 14:15:10,297 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-08 14:15:10,297 - sistema - INFO - [raw sql] {}
+2026-09-08 14:15:10,334 - sistema - INFO - BEGIN (implicit)
+2026-09-08 14:15:10,337 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-08 14:15:10,338 - sistema - INFO - [raw sql] {}
+2026-09-08 14:15:10,351 - sistema - INFO - COMMIT
+2026-09-08 14:21:47,520 - sistema - INFO - SELECT DATABASE()
+2026-09-08 14:21:47,520 - sistema - INFO - [raw sql] {}
+2026-09-08 14:21:47,556 - sistema - INFO - SELECT @@sql_mode
+2026-09-08 14:21:47,556 - sistema - INFO - [raw sql] {}
+2026-09-08 14:21:47,581 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-08 14:21:47,581 - sistema - INFO - [raw sql] {}
+2026-09-08 14:21:47,634 - sistema - INFO - BEGIN (implicit)
+2026-09-08 14:21:47,635 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-08 14:21:47,635 - sistema - INFO - [raw sql] {}
+2026-09-08 14:21:47,655 - sistema - INFO - COMMIT

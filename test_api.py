@@ -1,13 +1,15 @@
 from fastapi.testclient import TestClient
 from main import app
 
-import main 
+import main
 import pytest
+
 
 @pytest.fixture(autouse=True)
 def limpar_tentativas_login():
     main.TENTATIVAS_LOGIN.clear()
     yield
+
 
 client = TestClient(app)
 
@@ -73,10 +75,10 @@ def test_admin_cria_usuario_que_faz_login_e_usa_o_token():
     )
     assert resposta_protegida.status_code == 403
 
+
 def test_filtro_por_perfil():
     token_admin = client.post(
-
-         "/token", data={"username": ADMIN_EMAIL, "password": ADMIN_SENHA}
+        "/token", data={"username": ADMIN_EMAIL, "password": ADMIN_SENHA}
     ).json()["access_token"]
 
     resposta = client.get(
@@ -118,6 +120,3 @@ def test_filtro_status_invalido_retorna_422():
     )
 
     assert resposta.status_code == 422
-
-    
-

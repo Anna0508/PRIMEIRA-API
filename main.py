@@ -1,6 +1,6 @@
 from config import logger, MAX_TENTATIVAS_LOGIN
 
-from fastapi import FastAPI, Depends, HTTPException, status, Query
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Optional
@@ -9,16 +9,18 @@ from datetime import datetime, timezone, timedelta
 import time
 
 
-from database import USUARIOS_DB
+from database import SessionLocal, Usuario
 from auth import verificar_senha, criar_token, obter_usuario_atual
 
 DELAYS_SEGUNDOS = [2, 10, 60, 300]
 
 TENTATIVAS_LOGIN: dict[str, dict] = {}
 
+
 def calcular_delay(tentativas):
-    indice = min(tentativas, MAX_TENTATIVAS_LOGIN) - 1
+    indice = min(tentativas, MAX_TENTATIVAS_LOGIN)
     indice = min(indice, len(DELAYS_SEGUNDOS)) - 1
+    indice = min(tentativas, len(DELAYS_SEGUNDOS)) - 1
     return DELAYS_SEGUNDOS[indice]
 
 
@@ -30,8 +32,9 @@ def registrar_tentativa_falha(username, info_anterior):
     TENTATIVAS_LOGIN[username] = {
         "tentativas": tentativas_atual,
         "proxima_tentativa_permitida": datetime.now(timezone.utc)
-        +timedelta(seconds=calcular_delay(tentativas_atual)),
-   }
+        + timedelta(seconds=calcular_delay(tentativas_atual)),
+    }
+
 
 hasher = PasswordHash.recommended()
 
@@ -54,91 +57,88 @@ class UsuarioEditar(BaseModel):
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     info_tentativas = TENTATIVAS_LOGIN.get(form_data.username)
+
     if info_tentativas:
-        espera = (
-            info_tentativas["proxima_tentativa_permitida"] - datetime.now(timezone.utc)
-        ).total_seconds()
-        if espera > 0:
-            time.sleep(espera)
+        if datetime.now(timezone.utc) < info_tentativas["proxima_tentativa_permitida"]:
+            delay = calcular_delay(info_tentativas["tentativas"])
+            raise HTTPException(
+                status_code=429,
+                detail=f"Excesso de tentativas de login. Tente novamente em {delay} segundos.",
+            )
 
+    session = SessionLocal()
+    try:
+        usuario = session.query(Usuario).filter(Usuario.email == form_data.username).first()
+        if not usuario or not usuario.active or not verificar_senha(form_data.password, usuario.password):
+            registrar_tentativa_falha(form_data.username, info_tentativas)
+            raise HTTPException(status_code=401, detail="Credenciais invalidas")
 
-    usuario = USUARIOS_DB.get(form_data.username)
-    headers = {"WWW-Authenticate": "Bearer"}
-
-    if not usuario or not usuario.get("active"):
-        registrar_tentativa_falha(form_data.username, info_tentativas)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="E-mail ou senha incorretos.",
-        )
-
-    if not verificar_senha(form_data.password, usuario["password"]):
-        logger.warning(
-            f"Falha de login: {form_data.username}", extra={"user": "Sistema"}
-        )
-        registrar_tentativa_falha(form_data.username, info_tentativas)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="E-mail ou senha incorretos.",
-            headers=headers,
-        )
-
-    TENTATIVAS_LOGIN.pop(form_data.username, None)
-    token_real = criar_token(dados={"sub": form_data.username})
-    logger.info(
-        f"Usuário logado com sucesso: {form_data.username}",
-        extra={"user": usuario.get("name")},
-    )
-    return {"access_token": token_real, "token_type": "bearer"}
-
+        token = criar_token({"sub": usuario.email, "role": usuario.role})
+        TENTATIVAS_LOGIN.pop(form_data.username, None)
+        return {"access_token": token, "token_type": "bearer"}
+    finally:
+        session.close()
 
 @app.get("/usuarios")
-def listar_usuarios(role: str = None, active : bool = None):
-    resultado = {}
-
-    for email, dados in USUARIOS_DB.items():
-
-        if role is not None and dados["role"] != role:
-            continue
-        
-        if active is not None and dados["active"] != active:
-            continue 
-
-        resultado[email] = {
-            "name": dados.get("name"),
-            "role": dados["role"],
-            "active": dados["active"]
-        }
+def listar_usuarios(role: str = None, active: bool = None):
+    session = SessionLocal()
+    try:
+        usuarios =  session.query(Usuario).all()
+        resultado = []
+        for usuario in usuarios:
+            if role is not None and usuario.role != role:
+                continue
+            if active is not None and usuario.active != active:
+                continue
+            resultado.append({
+                "id": usuario.id,
+                "email": usuario.email,
+                "name": usuario.name,
+                "role": usuario.role,
+                "active": usuario.active,
+                "create_at": usuario.create_at,
+                "update_at": usuario.update_at,
     
-    return resultado
+            })
+
+        return resultado
+    finally:
+        session.close()
+
 
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
 async def criar_usuario(
     dados: UsuarioCriar, usuario_atual: dict = Depends(obter_usuario_atual)
 ):
-    
-    quem = usuario_atual.get("name", "Admin")
-    if usuario_atual.get("role") != "admin":
-        logger.error("FALHA: Sem permissão", extra={"user": quem})
-        raise HTTPException(status_code=403, detail="Você não possui acesso.")
+    quem = usuario_atual.name 
+    if usuario_atual.role != "admin":
+        raise HTTPException(status_code=403, detail="acesso negado.")
 
-    if dados.email in USUARIOS_DB:
-        logger.error("FALHA: E-mail cadastrado", extra={"user": quem})
-        raise HTTPException(status_code=400, detail="E-mail já cadastrado")
+    session = SessionLocal()
+    try:
+        usuario_existente = session.query(Usuario).filter(Usuario.email == dados.email).first()
+        if usuario_existente:
+            raise HTTPException(status_code=400, detail="E-mail já cadastrado")
 
-    USUARIOS_DB[dados.email] = {
-        "name": dados.name,
-        "password": hasher.hash(dados.password),
-        "role": dados.role,
-        "active": True,
-    }
+        novo_usuario = Usuario(
+            email=dados.email,
+            name=dados.name,
+            password=hasher.hash(dados.password),
+            role=dados.role,
+            active=True,
+        )
 
-    logger.info(
-        f"QUEM: {quem}, AÇÃO: CRIAR_USUARIO,"
-        f"EM QUEM: {dados.email}, STATUS: SUCESSO",
-        extra={"user": quem},
-    )
-    return {"mensagem": f"Usuário {dados.email} criado com sucesso."}
+        session.add(novo_usuario)
+        session.commit()
+        session.refresh(novo_usuario)
+
+        logger.info(
+            f"Novo usuario criado: {dados.email} - {dados.name} - {dados.role}",
+            extra={"user": quem},
+        )
+        return {"mensagem": "Usuario criado com sucesso!", "usuario_id": novo_usuario.id}
+    finally:
+        session.close()
 
 
 @app.put("/usuarios/editar")
@@ -147,27 +147,29 @@ async def editar_usuario(
     dados: UsuarioEditar,
     usuario_atual: dict = Depends(obter_usuario_atual),
 ):
-    quem = usuario_atual.get("name", "Admin")
+    quem = usuario_atual.name
+    if usuario_atual.role != "admin":
+        raise HTTPException(status_code=403, detail="acesso negado")
 
-    if usuario_atual.get("role") != "admin":
-        raise HTTPException(status_code=403, detail="Acesso negado.")
+    session = SessionLocal()
+    try:
+        usuario = session.query(Usuario).filter(Usuario.email == email_alvo).first()
+        if not usuario:
+            raise HTTPException(status_code=404, detail="Usuario não encontrado")
 
-    if email_alvo not in USUARIOS_DB:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
+        if dados.name is not None:
+            usuario.name = dados.name
+        if dados.role is not None:
+            usuario.role = dados.role
+        if dados.active is not None:
+            usuario.active = dados.active
 
-    dados_antigos = USUARIOS_DB[email_alvo].copy()
+        session.commit()
+        logger.info(
+            f"Usuario editado: {email_alvo} - dados: {dados.model_dump()}",
+            extra={"user": quem},
 
-    if dados.name is not None:
-        USUARIOS_DB[email_alvo]["name"] = dados.name
-    if dados.role is not None:
-        USUARIOS_DB[email_alvo]["role"] = dados.role
-    if dados.active is not None:
-        USUARIOS_DB[email_alvo]["active"] = dados.active
-
-    logger.info(
-        f"Alterou a conta de [{email_alvo}]. Antigos:"
-        f"{dados_antigos.get('role')}"
-        f"Novos: {USUARIOS_DB[email_alvo].get('role')}",
-        extra={"user": quem},
-    )
-    return {"mensagem": "Cadastro atualizado com sucesso!"}
+        )
+        return {"mensagem": "Usuario editado com sucesso!"}
+    finally:
+        session.close()
