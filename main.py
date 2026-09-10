@@ -91,22 +91,22 @@ def listar_usuarios(
         query = session.query(Usuario)
         if role is not None:
             query = query.filter(Usuario.role == role)
-            if active is not None:
-                query = query.filter(Usuario.active == active)
-            usuarios = query.all()
+        if active is not None:
+            query = query.filter(Usuario.active == active)
+        usuarios = query.all()
 
-            resultado = []
-            for usuario in usuarios:
-                resultado.append({
-                    "id": usuario.id,
-                    "email": usuario.email,
-                    "name": usuario.name,
-                    "role": usuario.role,
-                    "active": usuario.active,
-                    "create_at": usuario.create_at,
-                    "update_at": usuario.update_at,
-                })
-                return resultado
+        resultado = []
+        for usuario in usuarios:
+            resultado.append({
+                "id": usuario.id,
+                "email": usuario.email,
+                "name": usuario.name,
+                "role": usuario.role,
+                "active": usuario.active,
+                "create_at": usuario.create_at,
+                "update_at": usuario.update_at,
+            })
+        return resultado
     except Exception as e:
         logger.error(f"Erro ao listar usuarios: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro interno do servidor")

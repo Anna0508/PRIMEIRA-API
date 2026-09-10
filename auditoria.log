@@ -3952,3 +3952,166 @@ WHERE usuarios.id = %(pk_1)s
 2026-09-08 16:50:20,922 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
 2026-09-08 16:50:21,352 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
 2026-09-08 16:50:21,357 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"
+2026-09-09 11:43:17,382 - sistema - INFO - SELECT DATABASE()
+2026-09-09 11:43:17,383 - sistema - INFO - [raw sql] {}
+2026-09-09 11:43:17,417 - sistema - INFO - SELECT @@sql_mode
+2026-09-09 11:43:17,418 - sistema - INFO - [raw sql] {}
+2026-09-09 11:43:17,437 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-09 11:43:17,438 - sistema - INFO - [raw sql] {}
+2026-09-09 11:43:17,469 - sistema - INFO - BEGIN (implicit)
+2026-09-09 11:43:17,470 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-09 11:43:17,471 - sistema - INFO - [raw sql] {}
+2026-09-09 11:43:17,489 - sistema - INFO - COMMIT
+2026-09-09 11:43:25,400 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:25,747 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 401 Unauthorized"
+2026-09-09 11:43:26,042 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:26,174 - Admin - INFO - Novo usuario criado: usuario_teste_automatizado@email.com - usuario teste - user
+2026-09-09 11:43:26,176 - sistema - INFO - HTTP Request: POST http://testserver/usuarios "HTTP/1.1 201 Created"
+2026-09-09 11:43:26,309 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:26,315 - sistema - INFO - HTTP Request: GET http://testserver/usuarios "HTTP/1.1 403 Forbidden"
+2026-09-09 11:43:26,622 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:26,630 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?role=admin "HTTP/1.1 200 OK"
+2026-09-09 11:43:26,926 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:26,931 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
+2026-09-09 11:43:27,252 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:43:27,257 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"
+2026-09-09 11:52:33,894 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:34,186 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 401 Unauthorized"
+2026-09-09 11:52:34,504 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:34,646 - Admin - INFO - Novo usuario criado: usuario_teste_automatizado@email.com - usuario teste - user
+2026-09-09 11:52:34,648 - sistema - INFO - HTTP Request: POST http://testserver/usuarios "HTTP/1.1 201 Created"
+2026-09-09 11:52:34,785 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:34,791 - sistema - INFO - HTTP Request: GET http://testserver/usuarios "HTTP/1.1 403 Forbidden"
+2026-09-09 11:52:35,160 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:35,167 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?role=admin "HTTP/1.1 200 OK"
+2026-09-09 11:52:35,488 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:35,496 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
+2026-09-09 11:52:35,798 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-09 11:52:35,804 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"
+2026-09-09 12:00:41,542 - sistema - INFO - mensagem sem campo user
+2026-09-09 13:09:23,526 - sistema - INFO - SELECT DATABASE()
+2026-09-09 13:09:23,526 - sistema - INFO - [raw sql] {}
+2026-09-09 13:09:23,556 - sistema - INFO - SELECT @@sql_mode
+2026-09-09 13:09:23,556 - sistema - INFO - [raw sql] {}
+2026-09-09 13:09:23,570 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-09 13:09:23,571 - sistema - INFO - [raw sql] {}
+2026-09-09 13:09:23,602 - sistema - INFO - BEGIN (implicit)
+2026-09-09 13:09:23,604 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-09 13:09:23,606 - sistema - INFO - [raw sql] {}
+2026-09-09 13:09:23,621 - sistema - INFO - COMMIT
+2026-09-09 13:10:43,863 - sistema - INFO - BEGIN (implicit)
+2026-09-09 13:10:43,866 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios
+2026-09-09 13:10:43,867 - sistema - INFO - [generated in 0.00039s] {}
+2026-09-09 13:10:43,885 - sistema - INFO - ROLLBACK
+2026-09-09 13:10:44,158 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 422 Unprocessable Entity"
+2026-09-09 13:31:19,697 - sistema - INFO - SELECT DATABASE()
+2026-09-09 13:31:19,698 - sistema - INFO - [raw sql] {}
+2026-09-09 13:31:19,729 - sistema - INFO - SELECT @@sql_mode
+2026-09-09 13:31:19,730 - sistema - INFO - [raw sql] {}
+2026-09-09 13:31:19,746 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-09 13:31:19,747 - sistema - INFO - [raw sql] {}
+2026-09-09 13:31:19,779 - sistema - INFO - BEGIN (implicit)
+2026-09-09 13:31:19,779 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-09 13:31:19,780 - sistema - INFO - [raw sql] {}
+2026-09-09 13:31:19,795 - sistema - INFO - COMMIT
+2026-09-09 14:01:13,833 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:01:13,837 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios
+2026-09-09 14:01:13,837 - sistema - INFO - [generated in 0.00041s] {}
+2026-09-09 14:01:13,855 - sistema - INFO - ROLLBACK
+2026-09-09 14:01:14,059 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:01:14,060 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+ LIMIT %(param_1)s
+2026-09-09 14:01:14,061 - sistema - INFO - [generated in 0.00040s] {'param_1': 1}
+2026-09-09 14:01:14,079 - sistema - INFO - ROLLBACK
+2026-09-09 14:06:46,128 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:06:46,132 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios
+2026-09-09 14:06:46,132 - sistema - INFO - [generated in 0.00043s] {}
+2026-09-09 14:06:46,145 - sistema - INFO - ROLLBACK
+2026-09-09 14:06:46,342 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:06:46,344 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:06:46,344 - sistema - INFO - [generated in 0.00046s] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:06:46,358 - sistema - INFO - COMMIT
+2026-09-09 14:06:46,388 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:06:46,390 - sistema - INFO - INSERT INTO usuarios (email, name, password, role, active, create_at, update_at) VALUES (%(email)s, %(name)s, %(password)s, %(role)s, %(active)s, %(create_at)s, %(update_at)s)
+2026-09-09 14:06:46,391 - sistema - INFO - [generated in 0.00090s] {'email': 'teste_busca_direta@exemplo.com', 'name': 'Usuário Exemplo', 'password': 'senha_segura', 'role': 'user', 'active': 1, 'create_at': datetime.datetime(2026, 9, 9, 17, 6, 46, 390445, tzinfo=datetime.timezone.utc), 'update_at': datetime.datetime(2026, 9, 9, 17, 6, 46, 390456, tzinfo=datetime.timezone.utc)}
+2026-09-09 14:06:46,405 - sistema - INFO - COMMIT
+2026-09-09 14:06:46,441 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:06:46,442 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:06:46,443 - sistema - INFO - [cached since 0.0988s ago] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:06:46,466 - sistema - INFO - COMMIT
+2026-09-09 14:11:40,228 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:11:40,232 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios
+2026-09-09 14:11:40,232 - sistema - INFO - [generated in 0.00039s] {}
+2026-09-09 14:11:40,247 - sistema - INFO - ROLLBACK
+2026-09-09 14:11:40,448 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:11:40,450 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:11:40,450 - sistema - INFO - [generated in 0.00047s] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:11:40,465 - sistema - INFO - COMMIT
+2026-09-09 14:11:40,496 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:11:40,498 - sistema - INFO - INSERT INTO usuarios (email, name, password, role, active, create_at, update_at) VALUES (%(email)s, %(name)s, %(password)s, %(role)s, %(active)s, %(create_at)s, %(update_at)s)
+2026-09-09 14:11:40,498 - sistema - INFO - [generated in 0.00054s] {'email': 'teste_busca_direta@exemplo.com', 'name': 'Usuário Exemplo', 'password': 'senha_segura', 'role': 'user', 'active': 1, 'create_at': datetime.datetime(2026, 9, 9, 17, 11, 40, 498121, tzinfo=datetime.timezone.utc), 'update_at': datetime.datetime(2026, 9, 9, 17, 11, 40, 498127, tzinfo=datetime.timezone.utc)}
+2026-09-09 14:11:40,515 - sistema - INFO - COMMIT
+2026-09-09 14:11:40,544 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:11:40,546 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-09 14:11:40,547 - sistema - INFO - [generated in 0.00061s] {'email_1': 'teste_busca_direta@exemplo.com', 'param_1': 1}
+2026-09-09 14:11:40,562 - sistema - INFO - ROLLBACK
+2026-09-09 14:11:40,600 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:11:40,601 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:11:40,602 - sistema - INFO - [cached since 0.1521s ago] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:11:40,617 - sistema - INFO - COMMIT
+2026-09-09 14:16:23,671 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:16:23,674 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios
+2026-09-09 14:16:23,675 - sistema - INFO - [generated in 0.00044s] {}
+2026-09-09 14:16:23,695 - sistema - INFO - ROLLBACK
+2026-09-09 14:16:23,886 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:16:23,888 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:16:23,888 - sistema - INFO - [generated in 0.00044s] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:16:23,907 - sistema - INFO - COMMIT
+2026-09-09 14:16:23,939 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:16:23,942 - sistema - INFO - INSERT INTO usuarios (email, name, password, role, active, create_at, update_at) VALUES (%(email)s, %(name)s, %(password)s, %(role)s, %(active)s, %(create_at)s, %(update_at)s)
+2026-09-09 14:16:23,942 - sistema - INFO - [generated in 0.00101s] {'email': 'teste_busca_direta@exemplo.com', 'name': 'Usuário Exemplo', 'password': 'senha_segura', 'role': 'user', 'active': 1, 'create_at': datetime.datetime(2026, 9, 9, 17, 16, 23, 941995, tzinfo=datetime.timezone.utc), 'update_at': datetime.datetime(2026, 9, 9, 17, 16, 23, 942005, tzinfo=datetime.timezone.utc)}
+2026-09-09 14:16:23,959 - sistema - INFO - COMMIT
+2026-09-09 14:16:23,989 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:16:23,992 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-09 14:16:23,992 - sistema - INFO - [generated in 0.00092s] {'email_1': 'teste_busca_direta@exemplo.com', 'param_1': 1}
+2026-09-09 14:16:24,010 - sistema - INFO - ROLLBACK
+2026-09-09 14:16:24,045 - sistema - INFO - BEGIN (implicit)
+2026-09-09 14:16:24,046 - sistema - INFO - DELETE FROM usuarios WHERE usuarios.email = %(email_1)s
+2026-09-09 14:16:24,046 - sistema - INFO - [cached since 0.1581s ago] {'email_1': 'teste_busca_direta@exemplo.com'}
+2026-09-09 14:16:24,061 - sistema - INFO - COMMIT
+2026-09-10 13:44:55,802 - sistema - INFO - mensagem sem campo user
+2026-09-10 13:59:28,167 - sistema - INFO - SELECT DATABASE()
+2026-09-10 13:59:28,169 - sistema - INFO - [raw sql] {}
+2026-09-10 13:59:28,211 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 13:59:28,211 - sistema - INFO - [raw sql] {}
+2026-09-10 13:59:28,239 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 13:59:28,240 - sistema - INFO - [raw sql] {}
+2026-09-10 13:59:28,306 - sistema - INFO - BEGIN (implicit)
+2026-09-10 13:59:28,307 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 13:59:28,307 - sistema - INFO - [raw sql] {}
+2026-09-10 13:59:28,361 - sistema - INFO - COMMIT
+2026-09-10 13:59:55,428 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:55,714 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 401 Unauthorized"
+2026-09-10 13:59:55,999 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:56,132 - Admin - INFO - Novo usuario criado: usuario_teste_automatizado@email.com - usuario teste - user
+2026-09-10 13:59:56,134 - sistema - INFO - HTTP Request: POST http://testserver/usuarios "HTTP/1.1 201 Created"
+2026-09-10 13:59:56,268 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:56,274 - sistema - INFO - HTTP Request: GET http://testserver/usuarios "HTTP/1.1 403 Forbidden"
+2026-09-10 13:59:56,559 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:56,566 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?role=admin "HTTP/1.1 200 OK"
+2026-09-10 13:59:56,884 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:56,891 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
+2026-09-10 13:59:57,177 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-10 13:59:57,182 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"

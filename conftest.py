@@ -24,7 +24,7 @@ def banco_de_teste():
     Base.metadata.create_all(bind=engine_teste)
 
     session = SessionTeste()
-    try:
+    try:  
         session.add(Usuario(
             email="admin@email.com",
             name="Admin",
