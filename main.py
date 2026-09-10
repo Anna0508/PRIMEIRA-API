@@ -1,6 +1,6 @@
 from config import logger, MAX_TENTATIVAS_LOGIN
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from typing import Optional
@@ -11,6 +11,7 @@ from datetime import datetime, timezone, timedelta
 
 from database import SessionLocal, Usuario
 from auth import verificar_senha, criar_token, obter_usuario_atual
+from auditoria_db import registrar_auditoria
 
 DELAYS_SEGUNDOS = [2, 10, 60, 300]
 
@@ -53,12 +54,13 @@ class UsuarioEditar(BaseModel):
 
 
 @app.post("/token")
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     info_tentativas = TENTATIVAS_LOGIN.get(form_data.username)
 
     if info_tentativas:
         if datetime.now(timezone.utc) < info_tentativas["proxima_tentativa_permitida"]:
             delay = calcular_delay(info_tentativas["tentativas"])
+            registrar_auditoria(form_data.username, "LOGIN", "falha", request)
             raise HTTPException(
                 status_code=429,
                 detail=f"Excesso de tentativas de login. Tente novamente em {delay} segundos.",
@@ -69,21 +71,26 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         usuario = session.query(Usuario).filter(Usuario.email == form_data.username).first()
         if not usuario or not usuario.active or not verificar_senha(form_data.password, usuario.password):
             registrar_tentativa_falha(form_data.username, info_tentativas)
+            registrar_auditoria(form_data.username, "LOGIN", "falha", request)
             raise HTTPException(status_code=401, detail="Credenciais invalidas")
 
         token = criar_token({"sub": usuario.email, "role": usuario.role})
         TENTATIVAS_LOGIN.pop(form_data.username, None)
+        registrar_auditoria(usuario.email, "LOGIN", "falha", request)
         return {"access_token": token, "token_type": "bearer"}
     finally:
         session.close()
 
 @app.get("/usuarios")
 def listar_usuarios(
+    request: Request,
     role: str = None, 
     active: bool = None,
     usuario_logado: Usuario = Depends(obter_usuario_atual),
+    
 ):
     if usuario_logado.role != "admin":
+        registrar_auditoria(usuario_logado.email, "LISTAR_USUARIOS", "falha", request)
         raise HTTPException(status_code=403, detail="Acesso negado.")
 
     session = SessionLocal()
@@ -115,10 +122,11 @@ def listar_usuarios(
     
 @app.post("/usuarios", status_code=status.HTTP_201_CREATED)
 async def criar_usuario(
-    dados: UsuarioCriar, usuario_atual: dict = Depends(obter_usuario_atual)
+    dados: UsuarioCriar, request: Request, usuario_atual: dict = Depends(obter_usuario_atual)
 ):
     quem = usuario_atual.name 
     if usuario_atual.role != "admin":
+        registrar_auditoria(usuario_atual.email, "CRIAR_USUARIO", "falha", request, alvo=dados.email)
         raise HTTPException(status_code=403, detail="acesso negado.")
 
     session = SessionLocal()
@@ -143,6 +151,7 @@ async def criar_usuario(
             f"Novo usuario criado: {dados.email} - {dados.name} - {dados.role}",
             extra={"user": quem},
         )
+        registrar_auditoria(usuario_atual.email, "CRIAR_USUARIO", "sucesso", request, alvo=dados.email)
         return {"mensagem": "Usuario criado com sucesso!", "usuario_id": novo_usuario.id}
     finally:
         session.close()
@@ -150,12 +159,14 @@ async def criar_usuario(
 
 @app.put("/usuarios/editar")
 async def editar_usuario(
+    request:Request,
     email_alvo: str,
     dados: UsuarioEditar,
     usuario_atual: dict = Depends(obter_usuario_atual),
 ):
     quem = usuario_atual.name
     if usuario_atual.role != "admin":
+        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "falha", request, alvo=dados.email)
         raise HTTPException(status_code=403, detail="acesso negado")
 
     session = SessionLocal()
@@ -177,6 +188,7 @@ async def editar_usuario(
             extra={"user": quem},
 
         )
+        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "sucesso", request, alvo=dados.email)
         return {"mensagem": "Usuario editado com sucesso!"}
     finally:
         session.close()

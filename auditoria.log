@@ -4115,3 +4115,253 @@ WHERE usuarios.email = %(email_1)s
 2026-09-10 13:59:56,891 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
 2026-09-10 13:59:57,177 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
 2026-09-10 13:59:57,182 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"
+2026-09-10 16:07:40,415 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:07:40,415 - sistema - INFO - [raw sql] {}
+2026-09-10 16:07:40,456 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:07:40,456 - sistema - INFO - [raw sql] {}
+2026-09-10 16:07:40,476 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:07:40,477 - sistema - INFO - [raw sql] {}
+2026-09-10 16:07:40,530 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:07:40,531 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:07:40,532 - sistema - INFO - [raw sql] {}
+2026-09-10 16:07:40,564 - sistema - INFO - COMMIT
+2026-09-10 16:08:01,651 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:08:01,651 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:01,689 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:08:01,690 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:01,706 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:08:01,707 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:01,750 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:08:01,751 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:08:01,752 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:01,773 - sistema - INFO - COMMIT
+2026-09-10 16:08:10,368 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:08:10,368 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:10,405 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:08:10,405 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:10,426 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:08:10,427 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:10,480 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:08:10,480 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:08:10,480 - sistema - INFO - [raw sql] {}
+2026-09-10 16:08:10,497 - sistema - INFO - COMMIT
+2026-09-10 16:11:45,408 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:11:45,408 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:45,444 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:11:45,445 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:45,463 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:11:45,465 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:45,514 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:11:45,516 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:11:45,517 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:45,541 - sistema - INFO - COMMIT
+2026-09-10 16:11:48,068 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:11:48,068 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:48,102 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:11:48,105 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:48,123 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:11:48,123 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:48,170 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:11:48,171 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:11:48,172 - sistema - INFO - [raw sql] {}
+2026-09-10 16:11:48,190 - sistema - INFO - COMMIT
+2026-09-10 16:12:47,156 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:12:47,156 - sistema - INFO - [raw sql] {}
+2026-09-10 16:12:47,186 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:12:47,186 - sistema - INFO - [raw sql] {}
+2026-09-10 16:12:47,203 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:12:47,204 - sistema - INFO - [raw sql] {}
+2026-09-10 16:12:47,262 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:12:47,262 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:12:47,263 - sistema - INFO - [raw sql] {}
+2026-09-10 16:12:47,285 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:12:47,285 - sistema - INFO - [raw sql] {}
+2026-09-10 16:12:47,301 - sistema - INFO - ROLLBACK
+2026-09-10 16:22:06,415 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:22:06,416 - sistema - INFO - [raw sql] {}
+2026-09-10 16:22:06,445 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:22:06,445 - sistema - INFO - [raw sql] {}
+2026-09-10 16:22:06,464 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:22:06,465 - sistema - INFO - [raw sql] {}
+2026-09-10 16:22:06,511 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:22:06,512 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:22:06,512 - sistema - INFO - [raw sql] {}
+2026-09-10 16:22:06,530 - sistema - INFO - COMMIT
+2026-09-10 16:27:10,948 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:27:10,948 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:10,988 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:27:10,988 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:11,008 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:27:11,009 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:11,062 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:27:11,063 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:27:11,063 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:11,083 - sistema - INFO - COMMIT
+2026-09-10 16:27:15,301 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:27:15,302 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:15,336 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:27:15,337 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:15,353 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:27:15,353 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:15,402 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:27:15,403 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:27:15,403 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:15,423 - sistema - INFO - COMMIT
+2026-09-10 16:27:35,007 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:27:35,008 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:35,044 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:27:35,045 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:35,062 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:27:35,062 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:35,123 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:27:35,123 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:27:35,124 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:35,148 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:27:35,148 - sistema - INFO - [raw sql] {}
+2026-09-10 16:27:35,163 - sistema - INFO - ROLLBACK
+2026-09-10 16:28:11,147 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:28:11,148 - sistema - INFO - [raw sql] {}
+2026-09-10 16:28:11,184 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:28:11,184 - sistema - INFO - [raw sql] {}
+2026-09-10 16:28:11,212 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:28:11,212 - sistema - INFO - [raw sql] {}
+2026-09-10 16:28:11,263 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:28:11,264 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:28:11,266 - sistema - INFO - [raw sql] {}
+2026-09-10 16:28:11,282 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:28:11,283 - sistema - INFO - [raw sql] {}
+2026-09-10 16:28:11,298 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:02,304 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:02,304 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:02,341 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:02,341 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:02,359 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:02,359 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:02,412 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:02,412 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:02,413 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:02,430 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:02,431 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:02,455 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:10,147 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:10,147 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:10,185 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:10,185 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:10,202 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:10,202 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:10,253 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:10,254 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:10,254 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:10,270 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:10,271 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:10,287 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:16,653 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:16,653 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:16,695 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:16,695 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:16,712 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:16,713 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:16,762 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:16,763 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:16,763 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:16,781 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:16,782 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:16,809 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:18,638 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:18,639 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:18,680 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:18,682 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:18,722 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:18,724 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:18,785 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:18,786 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:18,786 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:18,801 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:18,802 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:18,825 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:27,468 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:27,470 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:27,502 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:27,503 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:27,521 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:27,522 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:27,562 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:27,563 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:27,563 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:27,580 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:27,580 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:27,606 - sistema - INFO - ROLLBACK
+2026-09-10 16:30:32,658 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:32,659 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:32,689 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:32,690 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:32,711 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:32,712 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:32,762 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:32,762 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:32,763 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:32,779 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:32,779 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:32,807 - sistema - INFO - 
+CREATE TABLE evento_auditoria (
+	id INTEGER NOT NULL AUTO_INCREMENT, 
+	usuario VARCHAR(255) NOT NULL, 
+	acao VARCHAR(50) NOT NULL, 
+	alvo VARCHAR(255), 
+	data_hora DATETIME DEFAULT (now()), 
+	ip_origem VARCHAR(45), 
+	resultado VARCHAR(20) NOT NULL, 
+	PRIMARY KEY (id)
+)
+
+
+2026-09-10 16:30:32,807 - sistema - INFO - [no key 0.00046s] {}
+2026-09-10 16:30:32,851 - sistema - INFO - CREATE INDEX ix_evento_auditoria_id ON evento_auditoria (id)
+2026-09-10 16:30:32,852 - sistema - INFO - [no key 0.00032s] {}
+2026-09-10 16:30:32,873 - sistema - INFO - COMMIT
+2026-09-10 16:30:34,819 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:30:34,819 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:34,851 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:30:34,852 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:34,868 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:30:34,869 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:34,922 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:30:34,923 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:30:34,924 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:34,941 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:30:34,943 - sistema - INFO - [raw sql] {}
+2026-09-10 16:30:34,963 - sistema - INFO - COMMIT
+2026-09-10 16:31:09,488 - sistema - INFO - SELECT DATABASE()
+2026-09-10 16:31:09,489 - sistema - INFO - [raw sql] {}
+2026-09-10 16:31:09,525 - sistema - INFO - SELECT @@sql_mode
+2026-09-10 16:31:09,525 - sistema - INFO - [raw sql] {}
+2026-09-10 16:31:09,541 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-10 16:31:09,542 - sistema - INFO - [raw sql] {}
+2026-09-10 16:31:09,603 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:31:09,604 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-10 16:31:09,604 - sistema - INFO - [raw sql] {}
+2026-09-10 16:31:09,623 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-10 16:31:09,623 - sistema - INFO - [raw sql] {}
+2026-09-10 16:31:09,639 - sistema - INFO - COMMIT
+2026-09-10 16:33:34,924 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:33:34,933 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-10 16:33:34,933 - sistema - INFO - [generated in 0.00054s] {'email_1': 'admin@email.com', 'param_1': 1}
+2026-09-10 16:33:35,642 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:33:35,648 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-10 16:33:35,648 - sistema - INFO - [generated in 0.00103s] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-10 16:33:35,667 - sistema - INFO - COMMIT
+2026-09-10 16:33:35,737 - sistema - INFO - ROLLBACK
+2026-09-10 16:34:46,513 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:34:46,514 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-10 16:34:46,516 - sistema - INFO - [cached since 71.58s ago] {'email_1': 'jose@email.com', 'param_1': 1}
+2026-09-10 16:34:46,915 - sistema - INFO - BEGIN (implicit)
+2026-09-10 16:34:46,915 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-10 16:34:46,915 - sistema - INFO - [cached since 71.27s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-10 16:34:46,933 - sistema - INFO - COMMIT
+2026-09-10 16:34:47,032 - sistema - INFO - ROLLBACK

@@ -33,7 +33,7 @@ class Usuario(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
-
+from models import EventoAuditoria
 Base.metadata.create_all(bind=engine)
 
 def obter_usuarios_por_email(email):
