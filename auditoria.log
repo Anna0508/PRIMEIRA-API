@@ -4365,3 +4365,150 @@ WHERE usuarios.email = %(email_1)s
 2026-09-10 16:34:46,915 - sistema - INFO - [cached since 71.27s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
 2026-09-10 16:34:46,933 - sistema - INFO - COMMIT
 2026-09-10 16:34:47,032 - sistema - INFO - ROLLBACK
+2026-09-11 16:53:19,579 - sistema - INFO - SELECT DATABASE()
+2026-09-11 16:53:19,580 - sistema - INFO - [raw sql] {}
+2026-09-11 16:53:19,606 - sistema - INFO - SELECT @@sql_mode
+2026-09-11 16:53:19,607 - sistema - INFO - [raw sql] {}
+2026-09-11 16:53:19,620 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-11 16:53:19,621 - sistema - INFO - [raw sql] {}
+2026-09-11 16:53:19,648 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:19,649 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-11 16:53:19,649 - sistema - INFO - [raw sql] {}
+2026-09-11 16:53:19,663 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-11 16:53:19,664 - sistema - INFO - [raw sql] {}
+2026-09-11 16:53:19,678 - sistema - INFO - COMMIT
+2026-09-11 16:53:52,713 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:52,715 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:52,715 - sistema - INFO - [generated in 0.00037s] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:52,734 - sistema - INFO - COMMIT
+2026-09-11 16:53:52,775 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:53,072 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:53,073 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:53,073 - sistema - INFO - [cached since 0.3582s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'falha'}
+2026-09-11 16:53:53,092 - sistema - INFO - COMMIT
+2026-09-11 16:53:53,128 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 401 Unauthorized"
+2026-09-11 16:53:53,432 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:53,432 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:53,433 - sistema - INFO - [cached since 0.7178s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:53,451 - sistema - INFO - COMMIT
+2026-09-11 16:53:53,486 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:53,676 - Admin - INFO - Novo usuario criado: usuario_teste_automatizado@email.com - usuario teste - user
+2026-09-11 16:53:53,677 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:53,678 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:53,678 - sistema - INFO - [cached since 0.9632s ago] {'usuario': 'admin@email.com', 'acao': 'CRIAR_USUARIO', 'alvo': 'usuario_teste_automatizado@email.com', 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:53,693 - sistema - INFO - COMMIT
+2026-09-11 16:53:53,728 - sistema - INFO - HTTP Request: POST http://testserver/usuarios "HTTP/1.1 201 Created"
+2026-09-11 16:53:53,854 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:53,855 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:53,855 - sistema - INFO - [cached since 1.14s ago] {'usuario': 'usuario_teste_automatizado@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:53,874 - sistema - INFO - COMMIT
+2026-09-11 16:53:53,910 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:53,918 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:53,919 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:53,920 - sistema - INFO - [cached since 1.205s ago] {'usuario': 'usuario_teste_automatizado@email.com', 'acao': 'LISTAR_USUARIOS', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'falha'}
+2026-09-11 16:53:53,935 - sistema - INFO - COMMIT
+2026-09-11 16:53:53,970 - sistema - INFO - HTTP Request: GET http://testserver/usuarios "HTTP/1.1 403 Forbidden"
+2026-09-11 16:53:54,256 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:54,257 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:54,257 - sistema - INFO - [cached since 1.542s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:54,272 - sistema - INFO - COMMIT
+2026-09-11 16:53:54,310 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:54,321 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?role=admin "HTTP/1.1 200 OK"
+2026-09-11 16:53:54,593 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:54,593 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:54,594 - sistema - INFO - [cached since 1.879s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:54,614 - sistema - INFO - COMMIT
+2026-09-11 16:53:54,647 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:54,657 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=true "HTTP/1.1 200 OK"
+2026-09-11 16:53:54,931 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:53:54,932 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:53:54,932 - sistema - INFO - [cached since 2.217s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': 'testclient', 'resultado': 'sucesso'}
+2026-09-11 16:53:54,949 - sistema - INFO - COMMIT
+2026-09-11 16:53:54,986 - sistema - INFO - HTTP Request: POST http://testserver/token "HTTP/1.1 200 OK"
+2026-09-11 16:53:54,995 - sistema - INFO - HTTP Request: GET http://testserver/usuarios?active=banana "HTTP/1.1 422 Unprocessable Entity"
+2026-09-11 16:56:03,443 - sistema - INFO - SELECT DATABASE()
+2026-09-11 16:56:03,443 - sistema - INFO - [raw sql] {}
+2026-09-11 16:56:03,480 - sistema - INFO - SELECT @@sql_mode
+2026-09-11 16:56:03,480 - sistema - INFO - [raw sql] {}
+2026-09-11 16:56:03,499 - sistema - INFO - SELECT @@lower_case_table_names
+2026-09-11 16:56:03,500 - sistema - INFO - [raw sql] {}
+2026-09-11 16:56:03,537 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:56:03,538 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`usuarios`
+2026-09-11 16:56:03,539 - sistema - INFO - [raw sql] {}
+2026-09-11 16:56:03,558 - sistema - INFO - DESCRIBE `cermob_estagio_1`.`evento_auditoria`
+2026-09-11 16:56:03,558 - sistema - INFO - [raw sql] {}
+2026-09-11 16:56:03,577 - sistema - INFO - COMMIT
+2026-09-11 16:57:14,955 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:57:14,960 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 16:57:14,960 - sistema - INFO - [generated in 0.00055s] {'email_1': 'admin@email.com', 'param_1': 1}
+2026-09-11 16:57:15,516 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:57:15,520 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:57:15,521 - sistema - INFO - [generated in 0.00094s] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 16:57:15,539 - sistema - INFO - COMMIT
+2026-09-11 16:57:15,567 - sistema - INFO - ROLLBACK
+2026-09-11 16:57:28,629 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:57:28,630 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 16:57:28,630 - sistema - INFO - [cached since 13.67s ago] {'email_1': 'admin@email.com', 'param_1': 1}
+2026-09-11 16:57:28,922 - sistema - INFO - BEGIN (implicit)
+2026-09-11 16:57:28,924 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 16:57:28,924 - sistema - INFO - [cached since 13.4s ago] {'usuario': 'admin@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'sucesso'}
+2026-09-11 16:57:28,951 - sistema - INFO - COMMIT
+2026-09-11 16:57:28,988 - sistema - INFO - ROLLBACK
+2026-09-11 17:00:26,576 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:26,576 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 17:00:26,577 - sistema - INFO - [cached since 191.6s ago] {'email_1': 'jose@email.com', 'param_1': 1}
+2026-09-11 17:00:26,790 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:26,790 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:00:26,790 - sistema - INFO - [cached since 191.3s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:00:26,809 - sistema - INFO - COMMIT
+2026-09-11 17:00:26,844 - sistema - INFO - ROLLBACK
+2026-09-11 17:00:36,935 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:36,937 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 17:00:36,937 - sistema - INFO - [cached since 202s ago] {'email_1': 'jose@email.com', 'param_1': 1}
+2026-09-11 17:00:37,220 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:37,221 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:00:37,221 - sistema - INFO - [cached since 201.7s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:00:37,243 - sistema - INFO - COMMIT
+2026-09-11 17:00:37,284 - sistema - INFO - ROLLBACK
+2026-09-11 17:00:53,582 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:53,583 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 17:00:53,584 - sistema - INFO - [cached since 218.6s ago] {'email_1': 'jose@email.com', 'param_1': 1}
+2026-09-11 17:00:53,897 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:00:53,898 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:00:53,900 - sistema - INFO - [cached since 218.4s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:00:53,946 - sistema - INFO - COMMIT
+2026-09-11 17:00:54,186 - sistema - INFO - ROLLBACK
+2026-09-11 17:03:19,356 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:03:19,357 - sistema - INFO - SELECT usuarios.id AS usuarios_id, usuarios.email AS usuarios_email, usuarios.name AS usuarios_name, usuarios.password AS usuarios_password, usuarios.role AS usuarios_role, usuarios.active AS usuarios_active, usuarios.create_at AS usuarios_create_at, usuarios.update_at AS usuarios_update_at 
+FROM usuarios 
+WHERE usuarios.email = %(email_1)s 
+ LIMIT %(param_1)s
+2026-09-11 17:03:19,358 - sistema - INFO - [cached since 364.4s ago] {'email_1': 'jose@email.com', 'param_1': 1}
+2026-09-11 17:03:19,770 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:03:19,772 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:03:19,772 - sistema - INFO - [cached since 364.3s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:03:19,794 - sistema - INFO - COMMIT
+2026-09-11 17:03:19,833 - sistema - INFO - ROLLBACK
+2026-09-11 17:03:31,722 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:03:31,723 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:03:31,723 - sistema - INFO - [cached since 376.2s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:03:31,745 - sistema - INFO - COMMIT
+2026-09-11 17:05:17,573 - sistema - INFO - BEGIN (implicit)
+2026-09-11 17:05:17,574 - sistema - INFO - INSERT INTO evento_auditoria (usuario, acao, alvo, ip_origem, resultado) VALUES (%(usuario)s, %(acao)s, %(alvo)s, %(ip_origem)s, %(resultado)s) RETURNING evento_auditoria.id, evento_auditoria.data_hora
+2026-09-11 17:05:17,575 - sistema - INFO - [cached since 482.1s ago] {'usuario': 'jose@email.com', 'acao': 'LOGIN', 'alvo': None, 'ip_origem': '127.0.0.1', 'resultado': 'falha'}
+2026-09-11 17:05:17,593 - sistema - INFO - COMMIT
