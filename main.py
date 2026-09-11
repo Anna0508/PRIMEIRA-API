@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import Optional
 from pwdlib import PasswordHash
 from datetime import datetime, timezone, timedelta
+from sqlalchemy.exc import IntegrityError
 
 
 
@@ -76,7 +77,7 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
 
         token = criar_token({"sub": usuario.email, "role": usuario.role})
         TENTATIVAS_LOGIN.pop(form_data.username, None)
-        registrar_auditoria(usuario.email, "LOGIN", "falha", request)
+        registrar_auditoria(usuario.email, "LOGIN", "sucesso", request)
         return {"access_token": token, "token_type": "bearer"}
     finally:
         session.close()
@@ -124,7 +125,7 @@ def listar_usuarios(
 async def criar_usuario(
     dados: UsuarioCriar, request: Request, usuario_atual: dict = Depends(obter_usuario_atual)
 ):
-    quem = usuario_atual.name 
+    quem = usuario_atual.name
     if usuario_atual.role != "admin":
         registrar_auditoria(usuario_atual.email, "CRIAR_USUARIO", "falha", request, alvo=dados.email)
         raise HTTPException(status_code=403, detail="acesso negado.")
@@ -142,9 +143,12 @@ async def criar_usuario(
             role=dados.role,
             active=True,
         )
-
         session.add(novo_usuario)
-        session.commit()
+        try:
+            session.commit()
+        except IntegrityError:
+            session.rollback()
+            raise HTTPException(status_code=400, detail="E-mail já cadastrado")
         session.refresh(novo_usuario)
 
         logger.info(
@@ -155,8 +159,6 @@ async def criar_usuario(
         return {"mensagem": "Usuario criado com sucesso!", "usuario_id": novo_usuario.id}
     finally:
         session.close()
-
-
 @app.put("/usuarios/editar")
 async def editar_usuario(
     request:Request,
@@ -166,7 +168,7 @@ async def editar_usuario(
 ):
     quem = usuario_atual.name
     if usuario_atual.role != "admin":
-        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "falha", request, alvo=dados.email)
+        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "falha", request, alvo=email_alvo)
         raise HTTPException(status_code=403, detail="acesso negado")
 
     session = SessionLocal()
@@ -188,7 +190,7 @@ async def editar_usuario(
             extra={"user": quem},
 
         )
-        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "sucesso", request, alvo=dados.email)
+        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "sucesso", request, alvo=email_alvo)
         return {"mensagem": "Usuario editado com sucesso!"}
     finally:
         session.close()

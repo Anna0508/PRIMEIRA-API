@@ -5,11 +5,7 @@ from models import EventoAuditoria
 
 
 def obter_ip_cliente(request: Request):
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
     return request.client.host if request.client else "desconhecido"
-
 def registrar_auditoria(usuario: str, acao: str, resultado: str, request: Request, alvo: str = None):
     db = SessionLocal()
     try:
