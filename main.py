@@ -176,6 +176,7 @@ async def editar_usuario(
         usuario = session.query(Usuario).filter(Usuario.email == email_alvo).first()
         if not usuario:
             raise HTTPException(status_code=404, detail="Usuario não encontrado")
+        active_antigo = usuario.active
 
         if dados.name is not None:
             usuario.name = dados.name
@@ -185,12 +186,25 @@ async def editar_usuario(
             usuario.active = dados.active
 
         session.commit()
+
+        if active_antigo and usuario.active is False:
+            evento = "DESATIVAR_USUARIO"
+        elif not active_antigo and usuario.active is True:
+            evento = "REATIVAR_USUARIO"
+        else:
+            evento = "EDITAR_USUARIO"
+
+        logger.info(
+            f"Usuario editado: {email_alvo} - dados: {dados.model_dump()}",
+            extra={"user": quem},
+        )
         logger.info(
             f"Usuario editado: {email_alvo} - dados: {dados.model_dump()}",
             extra={"user": quem},
 
         )
-        registrar_auditoria(usuario_atual.email, "EDITAR_USUARIO", "sucesso", request, alvo=email_alvo)
+        
+        registrar_auditoria(usuario_atual.email, evento, "sucesso", request, alvo=email_alvo)
         return {"mensagem": "Usuario editado com sucesso!"}
     finally:
         session.close()
