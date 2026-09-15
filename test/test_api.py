@@ -4,10 +4,10 @@ from main import app
 import main
 import pytest
 
-
 @pytest.fixture(autouse=True)
 def limpar_tentativas_login():
-    main.TENTATIVAS_LOGIN.clear()
+    main.TENTATIVAS_POR_USUARIO_IP.clear()
+    main.TENTATIVAS_POR_IP.clear()
     yield
 
 
@@ -120,3 +120,16 @@ def test_filtro_status_invalido_retorna_422():
     )
 
     assert resposta.status_code == 422
+
+def test_bloqueio_por_ip_afeta_usuario_diferente():
+    resposta1 = client.post(
+        "/token",
+        data={"username": "atacante'@email.com", "password": "senha_errada"}
+    )
+    assert resposta1.status_code == 401
+
+    resposta2 = client.post(
+        "/token",
+        data={"username": "atacante22email.com", "password": "senha_errada"},
+    )
+    assert resposta2.status_code == 429

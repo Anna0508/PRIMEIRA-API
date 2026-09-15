@@ -12,10 +12,18 @@ def carregar_secret_key():
             "SECRET_KEY NÃO DEFINIDA!" "configure a varial antes de inicar o servidor"
         )
     return chave
+def carregar_database_url():
+    url = os.getenv("DATABASE_URL")
+    if not url:
+        raise ValueError(
+            "DATABASE_URL NÃO DEFINIDA! configure a variável antes de iniciar o servidor"
+        )
+    return url
 
 
 MAX_TENTATIVAS_LOGIN = int(os.getenv("MAX_TENTATIVAS_LOGIN", 4))
 SECRET_KEY = carregar_secret_key()
+DATABASE_URL = carregar_database_url()
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 

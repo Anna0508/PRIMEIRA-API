@@ -12,11 +12,12 @@ from sqlalchemy.exc import IntegrityError
 
 from database import SessionLocal, Usuario
 from auth import verificar_senha, criar_token, obter_usuario_atual
-from auditoria_db import registrar_auditoria
+from auditoria_db import registrar_auditoria, obter_ip_cliente
 
 DELAYS_SEGUNDOS = [2, 10, 60, 300]
 
-TENTATIVAS_LOGIN: dict[str, dict] = {}
+TENTATIVAS_POR_USUARIO_IP: dict[tuple[str, str], dict] = {}
+TENTATIVAS_POR_IP: dict[str, dict] = {}
 
 
 def calcular_delay(tentativas):
@@ -24,12 +25,12 @@ def calcular_delay(tentativas):
     return DELAYS_SEGUNDOS[indice]
 
 
-def registrar_tentativa_falha(username, info_anterior):
+def registrar_tentativa_falha(dicionario, chave, info_anterior):
     if info_anterior:
         tentativas_atual = info_anterior["tentativas"] + 1
     else:
         tentativas_atual = 1
-    TENTATIVAS_LOGIN[username] = {
+    dicionario[chave] = {
         "tentativas": tentativas_atual,
         "proxima_tentativa_permitida": datetime.now(timezone.utc)
         + timedelta(seconds=calcular_delay(tentativas_atual)),
@@ -56,31 +57,42 @@ class UsuarioEditar(BaseModel):
 
 @app.post("/token")
 async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
-    info_tentativas = TENTATIVAS_LOGIN.get(form_data.username)
+    ip = obter_ip_cliente(request)
+    chave_usuario_ip = (form_data.username, ip)
 
-    if info_tentativas:
-        if datetime.now(timezone.utc) < info_tentativas["proxima_tentativa_permitida"]:
-            delay = calcular_delay(info_tentativas["tentativas"])
-            registrar_auditoria(form_data.username, "LOGIN", "falha", request)
-            raise HTTPException(
-                status_code=429,
-                detail=f"Excesso de tentativas de login. Tente novamente em {delay} segundos.",
-            )
+    info_usuario_ip = TENTATIVAS_POR_USUARIO_IP.get(chave_usuario_ip)
+    info_ip = TENTATIVAS_POR_IP.get(ip)
 
+    agora = datetime.now(timezone.utc)
+    bloqueado_ate = max(
+        info_usuario_ip["proxima_tentativa_permitida"] if info_usuario_ip else agora,
+        info_ip["proxima_tentativa_permitida"] if info_ip else agora,
+    )
+
+    if agora < bloqueado_ate:
+        delay = int((bloqueado_ate - agora).total_seconds() )
+        registrar_auditoria(form_data.username, "LOGIN","falha", request)
+        raise HTTPException(
+            status_code=429,
+            detail=f"Excesso de tentativas de login. Tente novamente em {delay} segundos.",
+        )
     session = SessionLocal()
     try:
         usuario = session.query(Usuario).filter(Usuario.email == form_data.username).first()
         if not usuario or not usuario.active or not verificar_senha(form_data.password, usuario.password):
-            registrar_tentativa_falha(form_data.username, info_tentativas)
+            registrar_tentativa_falha(TENTATIVAS_POR_USUARIO_IP, chave_usuario_ip, info_usuario_ip)
+            registrar_tentativa_falha(TENTATIVAS_POR_IP, ip, info_ip)
             registrar_auditoria(form_data.username, "LOGIN", "falha", request)
             raise HTTPException(status_code=401, detail="Credenciais invalidas")
 
         token = criar_token({"sub": usuario.email, "role": usuario.role})
-        TENTATIVAS_LOGIN.pop(form_data.username, None)
+        TENTATIVAS_POR_USUARIO_IP.pop(chave_usuario_ip, None)
         registrar_auditoria(usuario.email, "LOGIN", "sucesso", request)
         return {"access_token": token, "token_type": "bearer"}
     finally:
         session.close()
+
+
 
 @app.get("/usuarios")
 def listar_usuarios(
